@@ -1,0 +1,9 @@
+(
+echo *.pyc
+echo __pycache__/
+echo db.sqlite3
+echo /staticfiles/
+echo /media/
+echo .env
+echo venv/
+) > .gitignore
