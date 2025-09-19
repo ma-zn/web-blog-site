@@ -7,3 +7,4 @@ echo /media/
 echo .env
 echo venv/
 ) > .gitignore
+# Django 
