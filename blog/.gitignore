@@ -1,0 +1,19 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite database
+db.sqlite3
+
+# Django stuff
+/media/
+/staticfiles/
+
+# Environment
+venv/
+.env
+
+# IDEs
+.vscode/
+.idea/

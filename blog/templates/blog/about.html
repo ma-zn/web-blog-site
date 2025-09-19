@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>About - My Blog</title>
+    <style>
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+        }
+        nav {
+            background-color: #161b22;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        nav a {
+            text-decoration: none;
+            color: #58a6ff;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #1f6feb;
+        }
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .about {
+            background: #161b22;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+        .about h1 {
+            margin-bottom: 15px;
+            color: #58a6ff;
+        }
+        footer {
+            background: #161b22;
+            color: #8b949e;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+            font-size: 0.9em;
+            border-top: 1px solid #30363d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li><a href="{% url 'home' %}#posts">Posts</a></li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- About Content -->
+    <main>
+        <section class="about">
+            <h1>About Me</h1>
+            <p>Hello! I’m a passionate blogger who enjoys sharing ideas about culture, lifestyle, and technology.</p>
+            <p>The goal of this blog is to inspire and connect with readers worldwide through thoughtful writing.</p>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        © 2025 My Dark Blog - All Rights Reserved
+    </footer>
+</body>
+</html>

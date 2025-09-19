@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: #161b22;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            width: 350px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #58a6ff;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        form p {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            background-color: #0d1117;
+            color: #c9d1d9;
+        }
+
+        button {
+            background-color: #238636;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #2ea043;
+        }
+
+        p {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Login</h1>
+        <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    {% if form.errors %}
+        <div style="background-color: #f8d7da; color: #842029; border: 1px solid #f5c2c7;
+                    border-radius: 6px; padding: 10px; margin-top: 10px;">
+            <strong>⚠ يرجى التحقق من البيانات:</strong>
+            <ul style="margin: 5px 0 0 20px; list-style: disc;">
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <button type="submit">Login</button>
+</form>
+
+        <p>Don't have an account? <a href="{% url 'register' %}">Sign up here</a></p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Blog{% endblock %}</title>
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+
+        /* Navbar */
+        nav {
+            background-color: #161b22;
+            padding: 15px 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between; /* ✅ يفصل اللوجو عن الباقي */
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 20px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #58a6ff;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            color: #1f6feb;
+        }
+
+        /* user dropdown */
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-dropdown button {
+            background: none;
+            border: none;
+            color: #58a6ff;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .user-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #161b22;
+            min-width: 150px;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            z-index: 1;
+        }
+
+        .user-dropdown-content a,
+        .user-dropdown-content form button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            text-align: left;
+            background: none;
+            border: none;
+            color: #c9d1d9;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .user-dropdown-content a:hover,
+        .user-dropdown-content form button:hover {
+            background-color: #1f6feb;
+            color: #fff;
+        }
+
+        .user-dropdown:hover .user-dropdown-content {
+            display: block;
+        }
+
+        /* Main content */
+        main {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1f6feb, #58a6ff);
+            color: #fff;
+            text-align: center;
+            padding: 60px 20px;
+            border-radius: 10px;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+
+        .about {
+            background: #161b22;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            margin-bottom: 40px;
+        }
+
+        .about h2 {
+            margin-bottom: 15px;
+            color: #58a6ff;
+        }
+
+        .about p {
+            color: #c9d1d9;
+            margin-bottom: 10px;
+        }
+
+        .post {
+            background: #161b22;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .post h2 {
+            margin-bottom: 10px;
+            color: #58a6ff;
+        }
+
+        .post p {
+            margin-bottom: 10px;
+            color: #c9d1d9;
+        }
+
+        .post small {
+            color: #8b949e;
+            font-size: 0.9em;
+        }
+
+        footer {
+            background: #161b22;
+            color: #8b949e;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 40px;
+            font-size: 0.9em;
+            border-top: 1px solid #30363d;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    {% load static %}
+<nav>
+  <div class="container">
+    <a class="logo" href="{% url 'home' %}">My Blog</a>
+    <ul class="nav-links">
+      <li class="{% if request.resolver_match.url_name == 'home' %}active{% endif %}">
+        <a href="{% url 'home' %}">Home</a>
+      </li>
+      <li class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+        <a href="{% url 'about' %}">About</a>
+      </li>
+      <li>
+        <a href="{% url 'home' %}#posts">Posts</a>
+      </li>
+      <li class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+        <a href="{% url 'contact' %}">Contact</a>
+      </li>
+    </ul>
+
+    <!-- user dropdown -->
+    <div class="user-dropdown">
+      {% if user.is_authenticated %}
+        <button>👤 {{ user.username }}</button>
+        <div class="user-dropdown-content">
+          <a href="#">Profile</a>
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+          </form>
+        </div>
+      {% else %}
+        <a href="{% url 'login' %}">Login</a> | 
+        <a href="{% url 'register' %}">Register</a>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+
+    <!-- Main Content -->
+    <main>
+        <section id="home" class="hero">
+            <h1>Welcome to My Dark Blog</h1>
+            <p>Discover stories, thoughts, and inspirations — all in one place.</p>
+        </section>
+
+        <section id="about" class="about">
+            <h2>About Me</h2>
+            <p>Hello! I’m a passionate blogger who loves writing about culture, lifestyle, and technology. </p>
+            <p>This blog uses a modern <strong>dark blue theme</strong> to make reading more comfortable and stylish.</p>
+        </section>
+
+        <section id="posts">
+            {% block content %}
+                {% for post in posts %}
+                    <div class="post">
+                        <h2>{{ post.title }}</h2>
+                        <p>{{ post.content|truncatewords:30 }}</p>
+                        <small>
+                            Published on {{ post.published_date }} by <b>{{ post.author.username }}</b>
+                        </small>
+                    </div>
+                {% empty %}
+                    <p>No posts yet.</p>
+                {% endfor %}
+            {% endblock %}
+        </section>
+    </main>
+
+    <footer id="contact">
+        © 2025 My Dark Blog - All Rights Reserved | Contact: moaz.zain@outlook.com
+    </footer>
+</body>
+</html>
